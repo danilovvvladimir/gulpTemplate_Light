@@ -1,20 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@import "vars";
+@import "fonts";
+@import "reset";
+@import "global";
 
-h1 {
-  color: blue;
-}
-h2 {
-  color: lime;
-}
-h3 {
-  color: lightblue;
-}
-
-ul {
-  display: flex;
-  justify-content: space-between;
-}
+@import "media";

@@ -26,7 +26,8 @@ const path = {
   },
   src: {
     html: srcPath + "*.html",
-    css: srcPath + "scss/*.scss",
+    scss: srcPath + "scss/*.scss",
+    css: srcPath + "css/",
     js: srcPath + "js/*.js",
     images: srcPath + "images/**/*.{jpeg, jpg, png, svg}",
     fonts: srcPath + "fonts/**/*.{eot, woff,woff2,ttf,svg}",
@@ -44,7 +45,7 @@ const path = {
 function serve() {
   browserSync.init({
     server: {
-      baseDir: "./" + distPath,
+      baseDir: "./" + srcPath,
     },
   });
 }
@@ -54,7 +55,7 @@ function html() {
     .pipe(browserSync.reload({ stream: true }));
 }
 function css() {
-  return src(path.src.css, { base: srcPath + "scss/" })
+  return src(path.src.scss, { base: srcPath + "scss/" })
     .pipe(sass())
     .pipe(
       autoprefixer({
@@ -64,6 +65,8 @@ function css() {
       })
     )
     .pipe(dest(path.build.css))
+    .pipe(dest(path.src.css))
+    .pipe(browserSync.reload({ stream: true }))
     .pipe(
       cssnano({
         zindex: false,
@@ -78,8 +81,7 @@ function css() {
         extname: ".css",
       })
     )
-    .pipe(dest(path.build.css))
-    .pipe(browserSync.reload({ stream: true }));
+    .pipe(dest(path.build.css));
 }
 function js() {
   return src(path.src.js, { base: srcPath + "js/" })
